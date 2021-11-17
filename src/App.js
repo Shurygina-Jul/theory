@@ -3,15 +3,19 @@ import "./App.css";
 import Car from "./Components/Car/Car";
 
 class App extends Component {
-  state = {
-    cars: [
-      { name: "Ford", year: 2018 },
-      { name: "Audi", year: 2016 },
-      { name: "Mazda", year: 2010 },
-    ],
-    pageTitle: "React components",
-    showCars: false,
-  };
+  constructor(props) {
+    console.log("constructor");
+    super(props);
+    this.state = {
+      cars: [
+        { name: "Ford", year: 2018 },
+        // { name: "Audi", year: 2016 },
+        // { name: "Mazda", year: 2010 },
+      ],
+      pageTitle: "React components",
+      showCars: false,
+    };
+  }
 
   changeTitleHandler = (newTitle) => {
     this.setState({
@@ -24,14 +28,12 @@ class App extends Component {
     });
   };
   toggleCarsHandler = () => {
-    console.log("toggle");
     this.setState({
       showCars: !this.state.showCars,
     });
   };
 
   onChangeNameHandler(name, index) {
-    console.log(name, index);
     const car = this.state.cars[index];
     car.name = name;
     const cars = [...this.state.cars];
@@ -45,20 +47,30 @@ class App extends Component {
     cars.splice(index, 1);
     this.setState({ cars });
   }
+  //Жизненный цикл компонеты
+  componentWillMount() {
+    console.log("App componentWillMound");
+  }
+  componentDidMount() {
+    console.log("App componentDidMount");
+  }
 
   render() {
+    console.log("App render");
     return (
       <div
         style={{
           marginLeft: "auto",
           marginRight: "auto",
           marginBottom: "10px",
-          width: "360px",
+          width: "500px",
           alignItems: "center",
           justifyContent: "center",
+          backgroundColor: "lightgreen",
         }}
       >
         <h1>{this.state.pageTitle}</h1>
+        <h1>{this.props.title}</h1>
         <input type="text" onChange={this.handleInput} />
         <button onClick={this.changeTitleHandler.bind(this, "Changed!!!")}>
           Change title
